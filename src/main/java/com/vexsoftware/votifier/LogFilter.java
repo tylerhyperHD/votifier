@@ -13,8 +13,7 @@ class LogFilter implements Filter {
 	private String prefix;
 
 	/**
-	 * Constructs a log filter that prepends the given prefix on all log
-	 * messages.
+	 * Constructs a log filter that prepends the given prefix on all log messages.
 	 * 
 	 * @param prefix
 	 */

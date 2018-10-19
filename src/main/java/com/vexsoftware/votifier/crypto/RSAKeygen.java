@@ -36,15 +36,13 @@ public class RSAKeygen {
 	/**
 	 * Generates an RSA key pair.
 	 * 
-	 * @param bits
-	 *            The amount of bits
+	 * @param bits The amount of bits
 	 * @return The key pair
 	 */
 	public static KeyPair generate(int bits) throws Exception {
 		LOG.info("Votifier is generating an RSA key pair...");
 		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
-		RSAKeyGenParameterSpec spec = new RSAKeyGenParameterSpec(bits,
-				RSAKeyGenParameterSpec.F4);
+		RSAKeyGenParameterSpec spec = new RSAKeyGenParameterSpec(bits, RSAKeyGenParameterSpec.F4);
 		keygen.initialize(spec);
 		return keygen.generateKeyPair();
 	}

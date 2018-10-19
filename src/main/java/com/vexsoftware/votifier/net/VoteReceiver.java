@@ -61,13 +61,10 @@ public class VoteReceiver extends Thread {
 	/**
 	 * Instantiates a new vote receiver.
 	 * 
-	 * @param host
-	 *            The host to listen on
-	 * @param port
-	 *            The port to listen on
+	 * @param host The host to listen on
+	 * @param port The port to listen on
 	 */
-	public VoteReceiver(final Votifier plugin, String host, int port)
-			throws Exception {
+	public VoteReceiver(final Votifier plugin, String host, int port) throws Exception {
 		this.plugin = plugin;
 		this.host = host;
 		this.port = port;
@@ -80,13 +77,9 @@ public class VoteReceiver extends Thread {
 			server = new ServerSocket();
 			server.bind(new InetSocketAddress(host, port));
 		} catch (Exception ex) {
-			LOG.log(Level.SEVERE,
-					"Error initializing vote receiver. Please verify that the configured");
-			LOG.log(Level.SEVERE,
-					"IP address and port are not already in use. This is a common problem");
-			LOG.log(Level.SEVERE,
-					"with hosting services and, if so, you should check with your hosting provider.",
-					ex);
+			LOG.log(Level.SEVERE, "Error initializing vote receiver. Please verify that the configured");
+			LOG.log(Level.SEVERE, "IP address and port are not already in use. This is a common problem");
+			LOG.log(Level.SEVERE, "with hosting services and, if so, you should check with your hosting provider.", ex);
 			throw new Exception(ex);
 		}
 	}
@@ -113,8 +106,7 @@ public class VoteReceiver extends Thread {
 			try {
 				Socket socket = server.accept();
 				socket.setSoTimeout(5000); // Don't hang on slow connections.
-				BufferedWriter writer = new BufferedWriter(
-						new OutputStreamWriter(socket.getOutputStream()));
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				InputStream in = socket.getInputStream();
 
 				// Send them our version.
@@ -127,8 +119,7 @@ public class VoteReceiver extends Thread {
 				in.read(block, 0, block.length);
 
 				// Decrypt the block.
-				block = RSA.decrypt(block, Votifier.getInstance().getKeyPair()
-						.getPrivate());
+				block = RSA.decrypt(block, Votifier.getInstance().getKeyPair().getPrivate());
 				int position = 0;
 
 				// Perform the opcode check.
@@ -160,45 +151,37 @@ public class VoteReceiver extends Thread {
 					LOG.info("Received vote record -> " + vote);
 
 				// Dispatch the vote to all listeners.
-				for (VoteListener listener : Votifier.getInstance()
-						.getListeners()) {
+				for (VoteListener listener : Votifier.getInstance().getListeners()) {
 					try {
 						listener.voteMade(vote);
 					} catch (Exception ex) {
 						String vlName = listener.getClass().getSimpleName();
 						LOG.log(Level.WARNING,
-								"Exception caught while sending the vote notification to the '"
-										+ vlName + "' listener", ex);
+								"Exception caught while sending the vote notification to the '" + vlName + "' listener",
+								ex);
 					}
 				}
 
 				// Call event in a synchronized fashion to ensure that the
 				// custom event runs in the
 				// the main server thread, not this one.
-				plugin.getServer().getScheduler()
-						.scheduleSyncDelayedTask(plugin, new Runnable() {
-							public void run() {
-								Bukkit.getServer().getPluginManager()
-										.callEvent(new VotifierEvent(vote));
-							}
-						});
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					public void run() {
+						Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
+					}
+				});
 
 				// Clean up.
 				writer.close();
 				in.close();
 				socket.close();
 			} catch (SocketException ex) {
-				LOG.log(Level.WARNING, "Protocol error. Ignoring packet - "
-						+ ex.getLocalizedMessage());
+				LOG.log(Level.WARNING, "Protocol error. Ignoring packet - " + ex.getLocalizedMessage());
 			} catch (BadPaddingException ex) {
-				LOG.log(Level.WARNING,
-						"Unable to decrypt vote record. Make sure that that your public key");
-				LOG.log(Level.WARNING,
-						"matches the one you gave the server list.", ex);
+				LOG.log(Level.WARNING, "Unable to decrypt vote record. Make sure that that your public key");
+				LOG.log(Level.WARNING, "matches the one you gave the server list.", ex);
 			} catch (Exception ex) {
-				LOG.log(Level.WARNING,
-						"Exception caught while receiving a vote notification",
-						ex);
+				LOG.log(Level.WARNING, "Exception caught while receiving a vote notification", ex);
 			}
 		}
 	}
@@ -206,8 +189,7 @@ public class VoteReceiver extends Thread {
 	/**
 	 * Reads a string from a block of data.
 	 * 
-	 * @param data
-	 *            The data to read from
+	 * @param data The data to read from
 	 * @return The string
 	 */
 	private String readString(byte[] data, int offset) {

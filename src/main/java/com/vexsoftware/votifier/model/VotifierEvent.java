@@ -24,8 +24,7 @@ public class VotifierEvent extends Event {
 	/**
 	 * Constructs a vote event that encapsulated the given vote record.
 	 * 
-	 * @param vote
-	 *            vote record
+	 * @param vote vote record
 	 */
 	public VotifierEvent(final Vote vote) {
 		this.vote = vote;

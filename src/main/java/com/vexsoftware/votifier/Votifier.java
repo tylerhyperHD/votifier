@@ -86,14 +86,12 @@ public class Votifier extends JavaPlugin {
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config);
 		File rsaDirectory = new File(getDataFolder() + "/rsa");
 		// Replace to remove a bug with Windows paths - SmilingDevil
-		String listenerDirectory = getDataFolder().toString()
-				.replace("\\", "/") + "/listeners";
+		String listenerDirectory = getDataFolder().toString().replace("\\", "/") + "/listeners";
 
 		/*
-		 * Use IP address from server.properties as a default for
-		 * configurations. Do not use InetAddress.getLocalHost() as it most
-		 * likely will return the main server address instead of the address
-		 * assigned to the server.
+		 * Use IP address from server.properties as a default for configurations. Do not
+		 * use InetAddress.getLocalHost() as it most likely will return the main server
+		 * address instead of the address assigned to the server.
 		 */
 		String hostAddr = Bukkit.getServer().getIp();
 		if (hostAddr == null || hostAddr.length() == 0)
@@ -115,8 +113,7 @@ public class Votifier extends JavaPlugin {
 				cfg.set("debug", false);
 
 				/*
-				 * Remind hosted server admins to be sure they have the right
-				 * port number.
+				 * Remind hosted server admins to be sure they have the right port number.
 				 */
 				LOG.info("------------------------------------------------------------------------------");
 				LOG.info("Assigning Votifier to listen on port 8192. If you are hosting Craftbukkit on a");
@@ -138,8 +135,7 @@ public class Votifier extends JavaPlugin {
 		}
 
 		/*
-		 * Create RSA directory and keys if it does not exist; otherwise, read
-		 * keys.
+		 * Create RSA directory and keys if it does not exist; otherwise, read keys.
 		 */
 		try {
 			if (!rsaDirectory.exists()) {
@@ -151,8 +147,7 @@ public class Votifier extends JavaPlugin {
 				keyPair = RSAIO.load(rsaDirectory);
 			}
 		} catch (Exception ex) {
-			LOG.log(Level.SEVERE,
-					"Error reading configuration file or RSA keys", ex);
+			LOG.log(Level.SEVERE, "Error reading configuration file or RSA keys", ex);
 			gracefulExit();
 			return;
 		}
