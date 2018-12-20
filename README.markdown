@@ -1,4 +1,9 @@
-# Votifier
+# Votifier Redone
+
+This is a simple continuation of a really awesome plugin called votifier. The original version is broken, so I made this to fix those issues.
+
+
+# What it is
 
 Votifier is a Bukkit plugin whose purpose is to be notified (aka *votified*) when a vote is made on a Minecraft server top list for the server.  Votifier creates a *lightweight* server that waits for connections by Minecraft server lists and uses a simple protocol to get the required information.  Votifier is *secure*, and makes sure that all vote notifications are delivered by authentic top lists.
 
